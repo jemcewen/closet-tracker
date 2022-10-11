@@ -1,0 +1,20 @@
+{
+  "name": "closet-tracker",
+  "version": "1.0.0",
+  "description": "Web application to track clothing items and purchases",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/index.js",
+    "server": "nodemon backend/index.js"
+  },
+  "author": "James McEwen",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.6.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
