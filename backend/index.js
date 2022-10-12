@@ -1,9 +1,11 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
 const {errorHandler} = require('./middleware/errorMiddleware');
+const connectDB = require('./config/database');
 const port = process.env.PORT || 5000;
 const itemRoutes = require('./routes/itemRoutes');
 
+connectDB();
 const app = express();
 
 app.use(express.json());
