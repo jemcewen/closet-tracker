@@ -1,5 +1,4 @@
 const asyncHandler = require('express-async-handler');
-// const mongoose = require('mongoose');
 const Item = require('../models/itemModel');
 
 const getItems = asyncHandler(async (req, res) => {
@@ -7,12 +6,8 @@ const getItems = asyncHandler(async (req, res) => {
   res.status(200).json(items);
 })
 
-const setItem = asyncHandler(async (req, res) => {
-  if(!req.body.name) {
-    res.status(400);
-    throw new Error('Please add an item name');
-  }
-  const item = await Item.create(req.body)
+const createItem = asyncHandler(async (req, res) => {
+  const item = await Item.create(req.body);
   res.status(200).json(item);
 })
 
@@ -42,7 +37,7 @@ const deleteItem = asyncHandler(async (req, res) => {
 
 module.exports = {
   getItems,
-  setItem,
+  createItem,
   updateItem,
   deleteItem
 }
