@@ -1,10 +1,11 @@
 const asyncHandler = require('express-async-handler');
 const Item = require('../models/itemModel');
-const User = require('../models/userModel');
+// const User = require('../models/userModel');
 
 const getItems = asyncHandler(async (req, res) => {
   const items = await Item.find({ user: req.session.user_id });
-  res.status(200).json(items);
+  res.render('items/index', { items });
+  // res.status(200).json(items);
 })
 
 const createItem = asyncHandler(async (req, res) => {

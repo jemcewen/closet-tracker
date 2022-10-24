@@ -3,11 +3,15 @@ const router = express.Router();
 const { 
   registerUser,
   loginUser,
-  logoutUser
+  logoutUser,
+  getLoginForm,
+  getRegisterForm
 } = require('../controllers/userController');
 
 router.post('/', registerUser);
-router.post('/login', loginUser);
+router.route('/login').get(getLoginForm).post(loginUser);
 router.post('/logout', logoutUser);
+router.get('/register', getRegisterForm);
+
 
 module.exports = router;
