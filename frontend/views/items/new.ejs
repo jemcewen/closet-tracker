@@ -1,0 +1,74 @@
+<% layout('layouts/boilerplate') %>
+
+  <div class="row border-bottom my-3 py-3">
+    <h1>New Item</h1>
+  </div>
+
+  <form action="/items" method="POST" enctype="multipart/form-data">
+
+    <div class="row border-bottom my-3 py-3">
+      <div class="col-4">
+        <label for="name" class="h3">Name</label>
+        <p>What is the item called?</p>
+      </div>
+      <div class="col-8">
+        <input type="text" name="item[name]" id="name" placeholder="Item name (required)" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="row border-bottom my-3 py-3">
+      <div class="col-4">
+        <label for="description" class="h3">Description</label>
+        <p><b>Optional</b></p>
+        <p>Describe the item and why you bought it.</p>
+      </div>
+      <div class="col-8">
+        <textarea type="textarea" rows='5' name="item[description]" id="description" placeholder="Description" class="form-control w-100" style="resize: none;"></textarea>
+      </div>
+    </div>
+
+    <div class="row border-bottom my-3 py-3">
+      <div class="col-4">
+        <label for="price" class="h3">Price</label>
+        <p>How much did you pay for the item?</p>
+      </div>
+      <div class="col-8">
+        <div class="input-group">
+          <span class="input-group-text" id="price-label">$</span>
+          <input type="text" name="item[price]" id="price" placeholder="Price (required)" class="form-control" aria-label="price" aria-describedby="price-label" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="row border-bottom my-3 py-3">
+      <div class="col-4">
+        <label for="datePurchased" class="h3">Date</label>
+        <p>When did you purchase the item?</p>
+      </div>
+      <div class="col-8">
+        <input type="date" name="item[datePurchased]" id="datePurchased" class="form-control w-100" required>
+      </div>
+    </div>
+
+    <div class="row border-bottom my-3 py-3">
+      <div class="col-4">
+        <label for="name" class="h3">Photo</label>
+        <p><b>Optional</b></p>
+        <p>Upload a photo of your item.</p>
+      </div>
+      <div class="col-8 col-md-4">
+        <input type="file" class="form-control" name="photo" id="photo" onchange="previewImage(event)">
+      </div>
+      <div class="col-12 col-md-4">
+        <div id="imagePreview" class="mx-auto"></div>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="d-flex">
+        <a href="/items" class="btn btn-light btn-lg text-muted ms-auto me-3">Cancel</a>
+        <button class="btn btn-info text-light btn-lg">Add Item</button>
+      </div>
+    </div>
+
+  </form>

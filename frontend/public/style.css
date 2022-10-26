@@ -1,3 +1,7 @@
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
 #logo {
   font-family: 'Lobster Two', cursive;
   color: black;
@@ -5,6 +9,18 @@
 }
 
 #form {
-  font-family: 'Raleway', sans-serif;
   width: 23rem;
+}
+
+#imagePreview {
+  display: flex;
+  justify-content: center;
+  height: 14rem;
+}
+
+#imagePreview img{
+  height: 14rem;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  opacity: 85%;
 }

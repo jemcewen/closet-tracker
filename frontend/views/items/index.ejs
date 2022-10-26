@@ -1,4 +1,6 @@
 <% layout('layouts/boilerplate') %>
   <% for (let item of items) { %>
     <p><%= item.name %></p>
+    
+    <img src="<%= item.photo.path %>" alt="">
   <% } %>

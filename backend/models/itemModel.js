@@ -11,7 +11,11 @@ const itemSchema = mongoose.Schema({
     required: [true, 'Name is required']
   },
   price: Number,
-  datePurchased: Date
+  datePurchased: Date,
+  photo: {
+    path: String,
+    filename: String
+  }
 })
 
 module.exports = mongoose.model('Item', itemSchema);

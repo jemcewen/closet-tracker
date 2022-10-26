@@ -9,13 +9,10 @@ const getItems = asyncHandler(async (req, res) => {
 })
 
 const createItem = asyncHandler(async (req, res) => {
-  const { name, price } = req.body;
-  const user = req.session.user_id;
-  const item = await Item.create({   
-    user,
-    name,
-    price
-  });
+  const item = new Item(req.body.item);
+  item.user = req.session.user_id;
+  item.photo = req.file;
+  await item.save();
   res.status(200).json(item);
 })
 
@@ -61,9 +58,14 @@ const deleteItem = asyncHandler(async (req, res) => {
   res.status(200).json(deletedItem);
 })
 
+const getNewForm = (req, res) => {
+  res.render('items/new');
+}
+
 module.exports = {
   getItems,
   createItem,
   updateItem,
-  deleteItem
+  deleteItem,
+  getNewForm
 }
