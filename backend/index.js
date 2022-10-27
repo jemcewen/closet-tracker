@@ -2,6 +2,7 @@ const express = require('express');
 const ejsMate = require('ejs-mate');
 const flash = require('connect-flash')
 const path = require('path');
+const methodOverride = require('method-override');
 const dotenv = require('dotenv').config();
 const errorHandler = require('./middleware/errorMiddleware');
 const flashHandler = require('./middleware/flashMiddleware');
@@ -29,8 +30,14 @@ app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride('_method'));
 
-app.use(flashHandler);
+app.use((req, res, next) => {
+  res.locals.user = req.session.user_id;
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
+  next();
+});
 
 app.use('/items', itemRoutes);
 app.use('/users', userRoutes);

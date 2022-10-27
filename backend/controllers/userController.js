@@ -42,13 +42,14 @@ const loginUser = asyncHandler(async (req, res) => {
   }
   else {
     req.flash('error', 'Invalid email or password');
-    res.redirect('login')
+    res.redirect('login');
   }
 })
 
 const logoutUser = (req, res) => {
   req.session.user_id = null;
-  res.json({message: 'Logged out'});
+  req.flash('success', 'You have been logged out');
+  res.redirect('login');
 }
 
 const getLoginForm = (req, res) => {

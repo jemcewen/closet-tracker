@@ -8,14 +8,16 @@ const {
   createItem,
   updateItem,
   deleteItem,
-  getNewForm
+  getNewForm,
+  getEditForm
 } = require('../controllers/itemController');
 
 const protect = require('../middleware/authMiddleware');
 
 router.route('/').get(protect, getItems).post(protect, upload.single('photo'), createItem);
-router.route('/:id').put(protect, updateItem).delete(protect, deleteItem);
+router.route('/:id').put(protect, upload.single('photo'), updateItem).delete(protect, deleteItem);
 
 router.get('/new', protect, getNewForm);
+router.get('/:id/edit', protect, getEditForm);
 
 module.exports = router;

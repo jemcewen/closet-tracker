@@ -1,11 +1,9 @@
 const asyncHandler = require('express-async-handler');
 const Item = require('../models/itemModel');
-// const User = require('../models/userModel');
 
 const getItems = asyncHandler(async (req, res) => {
   const items = await Item.find({ user: req.session.user_id });
   res.render('items/index', { items });
-  // res.status(200).json(items);
 })
 
 const createItem = asyncHandler(async (req, res) => {
@@ -32,9 +30,14 @@ const updateItem = asyncHandler(async (req, res) => {
     throw new Error('User not authorized');
   }
 
-  const updatedItem = await Item.findByIdAndUpdate(id, req.body, {new: true});
+  const updatedItem = await Item.findByIdAndUpdate(id, {...req.body.item});
+  if(req.file) {
+    updatedItem.photo = req.file;
+  }
+  await updatedItem.save();
 
-  res.status(200).json(updatedItem);
+  req.flash('success', 'Your item has been updated.');
+  res.redirect(`/items`);
 })
 
 const deleteItem = asyncHandler(async (req, res) => {
@@ -62,10 +65,20 @@ const getNewForm = (req, res) => {
   res.render('items/new');
 }
 
+const getEditForm = asyncHandler(async (req, res) => {
+  const item = await Item.findById(req.params.id);
+  if(!item) {
+    req.flash('error', 'Item not found');
+    return res.redirect('/items');
+  }
+  res.render('items/edit', { item });
+})
+
 module.exports = {
   getItems,
   createItem,
   updateItem,
   deleteItem,
-  getNewForm
+  getNewForm,
+  getEditForm
 }

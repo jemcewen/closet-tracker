@@ -10,6 +10,7 @@ const itemSchema = mongoose.Schema({
     type: String,
     required: [true, 'Name is required']
   },
+  description: String,
   price: Number,
   datePurchased: Date,
   photo: {

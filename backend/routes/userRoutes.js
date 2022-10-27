@@ -10,7 +10,7 @@ const {
 
 router.post('/', registerUser);
 router.route('/login').get(getLoginForm).post(loginUser);
-router.post('/logout', logoutUser);
+router.get('/logout', logoutUser);
 router.get('/register', getRegisterForm);
 
 
