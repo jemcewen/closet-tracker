@@ -46,7 +46,7 @@
         <p>When did you purchase the item?</p>
       </div>
       <div class="col-8">
-        <input type="date" name="item[datePurchased]" id="datePurchased" class="form-control w-100" required>
+        <input type="date" name="item[datePurchased]" id="datePurchased" class="form-control w-100" value="<%= dayjs.utc(item.datePurchased).format('YYYY-MM-DD') %>"required>
       </div>
     </div>
 
@@ -60,7 +60,11 @@
         <input type="file" class="form-control" name="photo" id="photo" onchange="previewImage(event)">
       </div>
       <div class="col-12 col-md-4">
-        <div id="imagePreview" class="mx-auto"></div>
+        <div id="imagePreview" class="mx-auto">
+          <% if(item.photo) { %> 
+          <img src="<%= item.photo.path %>" alt="">
+          <% } %> 
+        </div>
       </div>
     </div>
 
@@ -72,10 +76,3 @@
     </div>
 
   </form>
-
-  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-  <script>
-    const utcDate = new Date(<%- JSON.stringify(item.datePurchased) %>);
-    const correctDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
-    document.getElementById("datePurchased").value = dayjs(correctDate).format('YYYY-MM-DD');
-  </script>

@@ -1,6 +1,16 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const itemSchema = mongoose.Schema({
+const ImageSchema = new Schema({
+  path: String,
+  filename: String
+});
+
+ImageSchema.virtual('cardImage').get(function () {
+  return this.path.replace('/upload', '/upload/ar_1:1,c_crop');
+});
+
+const itemSchema = new Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -13,10 +23,7 @@ const itemSchema = mongoose.Schema({
   description: String,
   price: Number,
   datePurchased: Date,
-  photo: {
-    path: String,
-    filename: String
-  }
+  photo: ImageSchema
 })
 
 module.exports = mongoose.model('Item', itemSchema);

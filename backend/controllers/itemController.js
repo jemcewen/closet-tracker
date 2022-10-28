@@ -1,9 +1,13 @@
+const { cloudinary } = require('../cloudinary')
 const asyncHandler = require('express-async-handler');
 const Item = require('../models/itemModel');
+const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
 
 const getItems = asyncHandler(async (req, res) => {
   const items = await Item.find({ user: req.session.user_id });
-  res.render('items/index', { items });
+  res.render('items/index', { items, dayjs});
 })
 
 const createItem = asyncHandler(async (req, res) => {
@@ -11,7 +15,8 @@ const createItem = asyncHandler(async (req, res) => {
   item.user = req.session.user_id;
   item.photo = req.file;
   await item.save();
-  res.status(200).json(item);
+  req.flash('success', 'Your item has been added to your closet.');
+  res.redirect('/items');
 })
 
 const updateItem = asyncHandler(async (req, res) => {
@@ -37,7 +42,7 @@ const updateItem = asyncHandler(async (req, res) => {
   await updatedItem.save();
 
   req.flash('success', 'Your item has been updated.');
-  res.redirect(`/items`);
+  res.redirect('/items');
 })
 
 const deleteItem = asyncHandler(async (req, res) => {
@@ -57,12 +62,13 @@ const deleteItem = asyncHandler(async (req, res) => {
   }
 
   const deletedItem = await Item.findByIdAndDelete(id);
-
-  res.status(200).json(deletedItem);
+  await cloudinary.uploader.destroy(deletedItem.photo.filename);
+  req.flash('success', 'Your item has been removed from your closet.');
+  res.redirect('/items');
 })
 
 const getNewForm = (req, res) => {
-  res.render('items/new');
+  res.render('items/new', { dayjs });
 }
 
 const getEditForm = asyncHandler(async (req, res) => {
@@ -71,7 +77,7 @@ const getEditForm = asyncHandler(async (req, res) => {
     req.flash('error', 'Item not found');
     return res.redirect('/items');
   }
-  res.render('items/edit', { item });
+  res.render('items/edit', { item, dayjs });
 })
 
 module.exports = {

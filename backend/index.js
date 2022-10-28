@@ -17,6 +17,12 @@ app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..', 'frontend', 'views'));
 
+app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride('_method'));
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
+
+app.use(express.json());
+
 const session = require('express-session');
 const sessionConfig = {
   secret: process.env.SECRET,
@@ -25,12 +31,6 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig));
 app.use(flash());
-
-app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(methodOverride('_method'));
 
 app.use((req, res, next) => {
   res.locals.user = req.session.user_id;

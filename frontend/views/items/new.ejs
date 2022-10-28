@@ -46,7 +46,7 @@
         <p>When did you purchase the item?</p>
       </div>
       <div class="col-8">
-        <input type="date" name="item[datePurchased]" id="datePurchased" class="form-control w-100" required>
+        <input type="date" name="item[datePurchased]" id="datePurchased" class="form-control w-100" required value="<%= dayjs().format('YYYY-MM-DD'); %>">
       </div>
     </div>
 
@@ -72,8 +72,3 @@
     </div>
 
   </form>
-
-  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-  <script>
-    document.getElementById("datePurchased").value = dayjs().format('YYYY-MM-DD');
-  </script>
