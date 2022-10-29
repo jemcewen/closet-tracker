@@ -1,0 +1,19 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row">
+  <div class="col-sm-6 mb-3">
+    <img src="<%= item.photo.viewImage %>" class="w-100" alt="Item image">
+  </div>
+  <div class="col-sm-6">
+    <h1><%= item.name %></h1>
+    <p class="text-muted">Purchased <%= dayjs.utc(item.datePurchased).format('dddd, MMM. D, YYYY') %></p>
+    <h2 class="mb-3 pb-3 border-bottom">$<%= item.price %></h2>
+    <p><%= item.description %></p>
+    <div>
+      <a href="<%= item._id %>/edit" class="card-link">Edit</a>
+      <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#deleteModal<%= item._id %>">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

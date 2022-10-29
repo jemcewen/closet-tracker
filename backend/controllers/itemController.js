@@ -67,6 +67,15 @@ const deleteItem = asyncHandler(async (req, res) => {
   res.redirect('/items');
 })
 
+const getItem = asyncHandler(async (req, res) => {
+  const item = await Item.findById(req.params.id);
+  if(!item) {
+    req.flash('error', 'Item not found.');
+    return res.redirect('/items');
+  }
+  res.render('items/view', { item, dayjs });
+})
+
 const getNewForm = (req, res) => {
   res.render('items/new', { dayjs });
 }
@@ -85,6 +94,7 @@ module.exports = {
   createItem,
   updateItem,
   deleteItem,
+  getItem,
   getNewForm,
   getEditForm
 }

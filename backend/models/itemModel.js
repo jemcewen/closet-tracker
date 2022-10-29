@@ -10,6 +10,10 @@ ImageSchema.virtual('cardImage').get(function () {
   return this.path.replace('/upload', '/upload/ar_1:1,c_crop');
 });
 
+ImageSchema.virtual('viewImage').get(function () {
+  return this.path.replace('/upload', '/upload/ar_1:1,c_crop');
+});
+
 const itemSchema = new Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,

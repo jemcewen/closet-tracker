@@ -24,12 +24,10 @@
         </ul>
         <div class="card-body">
           <a href="items/<%= item._id %>/edit" class="card-link">Edit</a>
-
-          
           <a href="#" class="card-link" data-bs-toggle="modal" data-bs-target="#deleteModal<%= item._id %>">
             Delete
           </a>
-          
+          <a href="/items/<%= item._id %>" class="card-link">Details</a>
           <!-- Modal -->
           <div class="modal fade" id="deleteModal<%= item._id %>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
