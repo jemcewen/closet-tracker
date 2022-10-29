@@ -16,9 +16,10 @@ const {
 const protect = require('../middleware/authMiddleware');
 
 router.route('/').get(protect, getItems).post(protect, upload.single('photo'), createItem);
-router.route('/:id').get(getItem).put(protect, upload.single('photo'), updateItem).delete(protect, deleteItem);
 
 router.get('/new', protect, getNewForm);
+router.route('/:id').get(getItem).put(protect, upload.single('photo'), updateItem).delete(protect, deleteItem);
+
 router.get('/:id/edit', protect, getEditForm);
 
 module.exports = router;

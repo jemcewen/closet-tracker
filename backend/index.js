@@ -4,6 +4,8 @@ const flash = require('connect-flash')
 const path = require('path');
 const methodOverride = require('method-override');
 const dotenv = require('dotenv').config();
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const errorHandler = require('./middleware/errorMiddleware');
 const flashHandler = require('./middleware/flashMiddleware');
 const connectDB = require('./config/database');
@@ -23,11 +25,26 @@ app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
 
 app.use(express.json());
 
-const session = require('express-session');
+const store = MongoStore.create({
+  mongoUrl: process.env.DB_URL,
+  secret: process.env.SECRET,
+  touchAfter: 24 * 60 * 60
+});
+
+store.on('error', (e) => {
+  console.log('Session store error.', e)
+})
+
 const sessionConfig = {
+  store,
   secret: process.env.SECRET,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7
+  },
 }
 app.use(session(sessionConfig));
 app.use(flash());
